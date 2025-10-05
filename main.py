@@ -200,15 +200,25 @@ with st.container():
             step=1,
             key="year_input"
         )
-
-        reg_year = st.number_input(
-            "Registration Year",
-            min_value=1980,
-            max_value=2025,
-            value=2017,
-            step=1,
-            key="reg_year_input"
-        )
+        skip_reg_year = st.checkbox("I don't know the registration year", value=True, key="skip_reg_year")
+        
+        if skip_reg_year:
+    # Auto-derive registration year/month from manufacturing year
+            reg_year = year
+    # pick a sensible default month; you can change to current month if you prefer
+            reg_month = 1
+            st.caption("📌 Using manufacturing year as registration year (Jan) since you chose to skip it.")
+        else:
+    # If user wants to provide it, enforce >= manufacturing year
+            reg_year_default = 2018 if 2018 >= year else year
+            reg_year = st.number_input(
+                "Registration Year",
+                min_value=year,     # only enforced when user opts in
+                max_value=2025,
+                value=reg_year_default,
+                step=1,
+                key="reg_year_input"
+            )
         reg_month = st.selectbox(
             "Registration Month",
             list(range(1, 13)),
