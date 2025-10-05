@@ -1,16 +1,8 @@
 
 import streamlit as st
+from prediction_helper import predict
 import warnings
 import datetime
-import os
-
-# Add error handling for imports and file loading
-try:
-    from prediction_helper import predict
-    st.success("✅ Prediction helper loaded successfully")
-except Exception as e:
-    st.error(f"❌ Error loading prediction helper: {str(e)}")
-    st.stop()
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -155,4 +147,3 @@ if st.button("🔮 Predict Price"):
         st.success(f"💰 Predicted Vehicle Price: {converted_price:,.2f} {currency}")
         st.caption(f"(Base prediction in EUR: €{prediction_eur:,.2f})")
         st.balloons()
-
