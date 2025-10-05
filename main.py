@@ -196,6 +196,7 @@ with st.container():
             "Manufacturing Year",
             min_value=1980,
             max_value=2025,
+            value=2015,
             step=1,
             key="year_input"
         )
@@ -204,6 +205,7 @@ with st.container():
             "Registration Year",
             min_value=1980,
             max_value=2025,
+            value=2017,
             step=1,
             key="reg_year_input"
         )
@@ -219,6 +221,7 @@ with st.container():
             "Power (Horsepower, HP)",
             min_value=30,
             max_value=1500,
+            value=120,
             step=5,
             key="power_hp_input"
         )
@@ -233,24 +236,26 @@ with st.container():
                 "Fuel Efficiency (km/L)",
                 min_value=1.0,
                 max_value=50.0,
+                value=20.0,
                 step=0.1,
                 key="fuel_eff"
             )
             ev_range_km = st.number_input(
-                "EV Range (km)", min_value=10, max_value=200, step=5, key="ev_range"
+                "EV Range (km)", min_value=10, max_value=200, value=50, step=5, key="ev_range"
             )
         else:
             fuel_efficiency = st.number_input(
                 "Fuel Efficiency (km/L)",
                 min_value=1.0,
                 max_value=50.0,
+                value=20.0,
                 step=0.1,
                 key="fuel_eff"
             )
             ev_range_km = 0
 
         mileage_in_km = st.number_input(
-            "Mileage (km)", min_value=0, max_value=500000, step=1000, key="mileage"
+            "Mileage (km)", min_value=0, max_value=500000, step=1000, value=40000, key="mileage"
         )
         currency = st.selectbox(
             "Select Output Currency",
