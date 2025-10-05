@@ -1,15 +1,27 @@
 import pandas as pd
 import numpy as np
 import joblib
+import os
 
 # -----------------------
-# Load trained artifacts
+# Load trained artifacts with error handling
 # -----------------------
-model = joblib.load("artifacts/model.joblib")
-log_scaler = joblib.load("artifacts/log_scaler.joblib")
-direct_scaler = joblib.load("artifacts/direct_scaler.joblib")
-log_transformer = joblib.load("artifacts/log_transformer.joblib")
-model_target_mapping = pd.read_csv("artifacts/model_target_mapping.csv")
+try:
+    model = joblib.load("artifacts/model.joblib")
+    print("✅ Model loaded successfully")
+except Exception as e:
+    print(f"❌ Error loading model: {str(e)}")
+    raise
+
+try:
+    log_scaler = joblib.load("artifacts/log_scaler.joblib")
+    direct_scaler = joblib.load("artifacts/direct_scaler.joblib")
+    log_transformer = joblib.load("artifacts/log_transformer.joblib")
+    model_target_mapping = pd.read_csv("artifacts/model_target_mapping.csv")
+    print("✅ All artifacts loaded successfully")
+except Exception as e:
+    print(f"❌ Error loading artifacts: {str(e)}")
+    raise
 
 try:
     feature_order = joblib.load("artifacts/feature_order.joblib")
