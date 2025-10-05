@@ -1,7 +1,9 @@
+# ml-old-car-price-prediction/main.py
 import streamlit as st
 import datetime
 import warnings
 from prediction_helper import predict
+from vehical_agent import create_vehicle_insight_agent
 
 
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -189,7 +191,6 @@ st.markdown("---")
 st.subheader("💡 Predict Vehicle Price")
 
 predict_btn = st.button("🔮 Predict Price", use_container_width=True)
-
 if predict_btn:
     if not model:
         st.error("❌ Please select a valid model for this brand before predicting.")
@@ -198,6 +199,15 @@ if predict_btn:
         st.success(f"💰 Predicted Vehicle Price: **{converted_price:,.2f} {currency}**")
         st.caption(f"(Base prediction in EUR: €{prediction_eur:,.2f})")
         st.balloons()
+
+        # --- Automatically generate Gemini insights ---
+        with st.spinner("Analyzing latest market insights with Gemini AI..."):
+            insights = create_vehicle_insight_agent(brand, model, prediction_eur)
+
+        # --- Display AI-generated report ---
+        st.markdown("### 🔍 Vehicle Market Insights")
+        st.markdown(insights)
+
 
        
 # ---------------------------
