@@ -101,3 +101,25 @@ vehical_agent.py calls DeepSeek (via OpenRouter) to craft a short, markdown-form
 - Image gallery size can be adjusted via the limit parameter in fetch_model_images.
 - The Streamlit page title, emojis, and layout are configured at the top of main.py.
 
+## Troubleshooting
+- The app runs, but prediction fails: Ensure all files in artifacts/ exist and are readable.
+- ImportError or version mismatch: Reinstall with pip install -r requirements.txt.
+- Insights show an API error: Set a valid OPENROUTER_API_KEY in environment variables or .env.
+- Images don’t appear: Wikipedia/Commons requests might throttle or have no matches for a rare model; try a different year/model.
+- Streamlit cannot find files: Make sure you are running from the ML-old-car-price-prediction-main directory where main.py resides.
+
+
+## Development Notes
+- Notebooks in Notebooks/ document data cleaning and model training.
+- If you change preprocessing, regenerate all relevant artifacts and update feature_order.joblib to match the trained pipeline.
+- Follow the versions in requirements.txt for reproducibility.
+
+
+## License
+Add your preferred license here (e.g., MIT). Replace this section as needed.
+
+
+## Acknowledgements
+- Streamlit team for the excellent app framework
+- Wikipedia and Wikimedia Commons contributors for open images
+- OpenRouter and the DeepSeek model for optional insights
