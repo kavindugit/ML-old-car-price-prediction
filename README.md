@@ -67,3 +67,37 @@ bash
 streamlit run main.py
 
 Then open the URL printed in the terminal (typically http://localhost:8501).
+
+## Using the App
+1. Choose a brand and model (brand logos render automatically).
+2. Provide basic specs:
+   - Manufacturing year; optionally a registration year/month
+   - Power (HP), mileage (km)
+   - Fuel type (petrol, diesel, electric, hybrid, etc.) and transmission
+   - Fuel efficiency (km/L) or EV range where relevant
+3. Select an output currency.
+4. Click “Predict Price”. The app will:
+   - Preprocess inputs and predict a base EUR price
+   - Convert to your selected currency
+   - Optionally generate a concise AI insights report (if OPENROUTER_API_KEY is set)
+   - Fetch a gallery of images for the chosen brand/model/year
+
+
+## How It Works (Overview)
+Under the hood, prediction_helper.py performs feature engineering and applies the same transformations used during training:
+- Derives vehicle age and cyclical month features
+- Encodes brand and model (target encoding for model via model_target_mapping.csv)
+- One-hot encodes categorical fields and aligns to feature_order.joblib
+- Scales numeric features using log_scaler.joblib, log_transformer.joblib, and direct_scaler.joblib
+- Runs the pre-trained model.joblib to obtain a price in EUR, then converts using a fixed lookup table
+
+image_agent.py queries Wikipedia and Wikimedia Commons for high-quality thumbnails, ranking results by proximity to the selected year.
+
+vehical_agent.py calls DeepSeek (via OpenRouter) to craft a short, markdown-formatted market insight report. This step is optional and requires OPENROUTER_API_KEY.
+
+
+## Configuration
+- Currency conversion rates are defined in prediction_helper.py under currency_rates.
+- Image gallery size can be adjusted via the limit parameter in fetch_model_images.
+- The Streamlit page title, emojis, and layout are configured at the top of main.py.
+
